@@ -1,5 +1,4 @@
 module.exports = {
-    sourceType: 'module',
   env: {
     "node": true,
     "jest": true,
@@ -45,7 +44,7 @@ module.exports = {
       },
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"]
+        "format": ["camelCase", "UPPER_CASE","snake_case"]
       },
       {
         "selector": "parameter",
