@@ -1,0 +1,23 @@
+{
+    "name": "data-center-online",
+    "id": "000000000000000000000000",
+    "setupId": "dc123456",
+    "ip": "127.0.0.1",
+    "port": 783,
+    "privateKey": "F080A4EB17994CFDB42847F6",
+    "publicKey": "61187195e268c75210bf7732",
+    "tokenExpirationTime": "1d",
+    "database": {
+        "server": "127.0.0.1",
+        "port": 27017,
+        "db": "data-center",
+        "user": null,
+        "password": null
+    },
+    "weightService": {
+        "server": "127.0.0.1",
+        "port": 782
+    },
+    "c2mCdnHost": "c2mcdn.blob.core.windows.net",
+    "c2mCdnSasToken": "?sv=2020-08-04&ss=bfqt&srt=co&sp=rwdlacuptfx&se=2021-11-30T18:04:13Z&st=2021-10-10T09:04:13Z&spr=https&sig=zXOyjFB8%2Fm2ysl4N%2FHv4tZYgCueIjYoiCDAXNgeUrFI%3D"
+}
