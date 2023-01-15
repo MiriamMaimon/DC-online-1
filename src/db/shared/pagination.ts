@@ -1,3 +1,4 @@
+import { logger } from '@c2m/c2m-logger';
 import { TableListParams } from "../pagination";
 
 export const filterSortData = async <T>(data: T[], reqQuery?: any, doFilter:boolean = false): Promise<T[]> => {
@@ -13,7 +14,6 @@ export const filterSortData = async <T>(data: T[], reqQuery?: any, doFilter:bool
 				Object.keys(sorter).forEach((key) => {
 					prev[key] = prev[key] === undefined ? null : prev[key];
 					next[key] = next[key] === undefined ? null : next[key];
-					//console.log(`key:${key} prev[key]: ${prev[key]} next[key]: ${next[key]}`)
 					if (sorter[key] === 'descend') {
                        
 						if (typeof (prev[key]) === 'number') {
@@ -61,12 +61,12 @@ export const filterSortData = async <T>(data: T[], reqQuery?: any, doFilter:bool
 			[key: string]: string[];
 		};
 
-		console.log('params.filter:', filter);
+		logger.info('params.filter:', filter);
 		if (Object.keys(filter).length > 0) {
 			data = data.filter((item) => {
 				return Object.keys(filter).every((key) => {
 					if (!filter[key]) {
-						console.log(`no key true`);
+						logger.info(`no key true`);
 						return true;
 					}
 
@@ -78,28 +78,26 @@ export const filterSortData = async <T>(data: T[], reqQuery?: any, doFilter:bool
                         (key.length - k.length) <= 2 &&
                          (key?.slice(-(key.length - k.length)) === 's' ||
                           key?.slice(-(key.length - k.length)) === 'es'))[0];
-						console.log(`key to key2 fix: ${key2}`);
+						logger.info(`key to key2 fix: ${key2}`);
 					}
 
-					console.log(`key2: ${key2} key: ${key} ${filter[key] }.includes(${item[key2 ?? key]})`);
+					logger.info(`key2: ${key2} key: ${key} ${filter[key] }.includes(${item[key2 ?? key]})`);
 					if (filter[key].length > 0 && typeof (filter[key][0]) === 'number') {
-						console.log(`number set as string`);
+						logger.info(`number set as string`);
 						filter[key] = filter[key].map(s => `${s}`);
 					}
 
 					if (filter[key].includes(`${item[key2 ?? key]}`)) {
-						//console.log(`${key} true`)
-						console.log(`${key} true`);
+						logger.info(`${key} true`);
 						return true;
 					}
                     
 					if (`${item[key2 ?? key]}`.indexOf(filter[key] as unknown as string) > -1) {
-						//console.log(`key2: ${key2} key: ${key} ${filter[key] }.includes(${item[key2 ?? key]})`)
-						console.log(`string ${key} true`);
+						logger.info(`string ${key} true`);
 						return true;
 					}
 
-					console.log(`${key} false`);
+					logger.info(`${key} false`);
 					return false;
 				});
 			});
@@ -114,7 +112,6 @@ export const paginationData =
  Promise<{ dataSource: T[], total: number, pageSize: number, current: number }> => {
  	const { current = 1, pageSize = 10 } = reqQuery;
  	const newData = await filterSortData<T>(data, reqQuery, doFilter);
- 	//console.log(`data len:${data?.length}`)
  	const dataSource = newData?.slice(
  		((current as number) - 1) * (pageSize as number),
  		(current as number) * (pageSize as number),

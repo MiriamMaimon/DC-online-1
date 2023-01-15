@@ -8,7 +8,6 @@ export class MonitorController {
 	constructor(private monitorService: MonitorService) { }
 	@Post()
 	public async cartStatus(@Body() data: any):Promise<IMonitorUpdates> {
-		console.log('cartStatus data', data);
 		if (_.isArray(data)) {
 			data.map((dataType: IMonitorUpdates) => {
 				// Allthough we receive a timestamp from the cart-system-monitoring service,

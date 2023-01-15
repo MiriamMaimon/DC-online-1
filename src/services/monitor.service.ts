@@ -1,3 +1,4 @@
+import { logger } from '@c2m/c2m-logger';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -13,23 +14,21 @@ export class MonitorService {
 
 	createMonitorUpdate(data: IMonitorUpdates):any {
 		try {
-			// console.log('createMonitorUpdate');
+			logger.debug('IMonitorUpdates data {0}',data)
 			this.monitorUpdatesModel.create(data);
 		}
 		catch (error) {
-			console.error('createMonitorUpdate error', error);
+			logger.error('createMonitorUpdate error', error);
 		}
 	}
 
 	async updateCartMonitor(data: IMonitorUpdates) :Promise<void>{
-		// console.log('updateCartMonitor-----', data.data, (data.type === 'lastPing'));
 		const newUpdate: Record<string, any> =
             data.type === 'lastPing'
             	? { lastPing: new Date(data.data["sendDate"]) }
             	: { [data.type]: data.data,
             		lastPing: new Date(data.data["sendDate"]) };
 
-		console.log('newUpdate', newUpdate);
 		try {
 			await this.cartsMonitorModel.updateOne(
 				{ cartID: data.cartID },
@@ -38,7 +37,7 @@ export class MonitorService {
 			);
 		}
 		catch (error) {
-			console.error('updateCartMonitor error', error);
+			logger.error('updateCartMonitor error', error);
 		}
 	}
 }

@@ -5,6 +5,7 @@ import * as crypto from "crypto-js";
 //import { defultSettings } from "src/config/configuration";
 import * as defultSettings  from "src/config/settings.default.json";
 import { IEdgeBase } from "./edge.interface";
+import { logger } from "@c2m/c2m-logger";
 
 export const edgeSchema: Schema = new Schema({
 	name: { type: String,
@@ -50,9 +51,8 @@ edgeSchema.virtual('carts', {
 // Document middlewares
 edgeSchema.pre<EdgeDocument>("save", async function () {
 	if (this.isModified("loginToken")) {
-		console.log(`org token:${this.loginToken}`);
+		logger.info(`org token:${this.loginToken}`);
 		this.isModified = crypto.AES.encrypt(this.loginToken, privateKey).toString();
-		//console.log(`secret:${privateKey} encrpt:${obj.loginToken} encr:${crypto.AES.encrypt(this.loginToken, privateKey).toString()}`)
 	}
    
 });

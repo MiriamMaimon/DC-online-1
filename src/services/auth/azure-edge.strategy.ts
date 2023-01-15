@@ -1,3 +1,4 @@
+import { logger } from '@c2m/c2m-logger';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, /*ExecutionContext*/} from '@nestjs/common';
 import { BearerStrategy } from 'passport-azure-ad';
@@ -10,7 +11,7 @@ export class AzureEdgeStrategy extends PassportStrategy(BearerStrategy, 'azure-e
 	constructor(
 		readonly configService: ConfigService
 	) {
-		console.log('configService',configService.get('appConfig'));
+		logger.info('configService',configService.get('appConfig'));
         
 		super({
 			identityMetadata: (configService.get<IAppConfig>('appConfig') ?? {} as IAppConfig).azure.c2m360ControlMetadata,

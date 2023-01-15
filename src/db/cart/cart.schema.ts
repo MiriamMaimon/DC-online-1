@@ -1,3 +1,4 @@
+import { logger } from '@c2m/c2m-logger';
 import { Schema, Document } from "mongoose";
 import { ICart } from "./cart.interface";
 import { defaultSchema } from "..//default/default.schema";
@@ -53,7 +54,7 @@ cartSchema.virtual('cartStatus').get(function() {
 
 cartSchema.pre<CartDocument>("save", async function () {
 	if (this.isModified("loginToken")) {
-		console.log(`org token:${this.loginToken}`);
+		logger.info(`org token:${this.loginToken}`);
 		this.isModified = crypto.AES.encrypt(this.loginToken, privateKey).toString();
 	}
     

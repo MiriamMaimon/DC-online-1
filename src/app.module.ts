@@ -30,7 +30,6 @@ import { AzureADModule } from './modules/azure-ad.module';
 				const usePassProtected = !!user && !!password;
 				const uri = `mongodb://${usePassProtected ? `${user}:${password}@` : ''}${server}:${port}`;
 
-				console.log('uri', uri);
 
 				return {
 					uri,
